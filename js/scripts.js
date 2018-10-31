@@ -1,247 +1,107 @@
-'use strict';
+// ——————————————————————————————————————————————————
+// Example
+// ——————————————————————————————————————————————————
 
-$(function() {
+const phrases = [
+  'Hi,',
+  'I\m Hannah Njeri',
+  'FullStack Developer',
+]
 
-  function next(next, current, winHeight) {
+const el = document.querySelector('.text')
+const fx = new TextScramble(el)
 
-    next.target.css({
-      display: 'block'
-    });
+let counter = 0
+const next = () => {
+  fx.setText(phrases[counter]).then(() => {
+    setTimeout(next, 800)
+  })
+  counter = (counter + 1) % phrases.length
+}
 
-    next.target.promise().done(function() {
-      current.target.animate({
-        marginTop: -winHeight,
-      }, 500, 'easeInCubic');
+next()
 
-      current.target.promise().done(function() {
-        $(this).css({
-          display: 'none'
-        });
-        current.current = false;
-        current.menuItem.parent().removeClass('active');
-        next.current = true;
-        next.menuItem.parent().addClass('active');
-      });
-    });
-
-  } // end-next
-
-  function prev(prev, current) {
-
-    prev.target.css({
-      display: 'block'
-    });
-
-    prev.target.promise().done(function() {
-      $(this).animate({
-        marginTop: 0,
-      }, 500, 'easeOutCubic');
-
-      $(this).promise().done(function() {
-        current.target.css({
-          display: 'none'
-        });
-        current.current = false;
-        current.menuItem.parent().removeClass('active');
-        prev.current = true;
-        prev.menuItem.parent().addClass('active');
-      });
-    });
-
-  } // end-prev
-
-  function nextSlide(e, slides, winHeight) {
-
-      var currentSlide = slides.filter(function(obj) {
-                          return obj.current;
-                        })[0],
-          animtedSlide = slides.filter(function(obj) {
-                          return obj.target.is(':animated');
-                        })[0],
-          currentSlideIndex = slides.indexOf(currentSlide),
-          nextSlide = slides[currentSlideIndex + 1];
-
-      if (currentSlideIndex !== slides.length - 1 && !animtedSlide) {
-
-        if (nextSlide.target.is(':hidden')) {
-
-          next(nextSlide, currentSlide, winHeight);
-
-        }
-
-      } // end-if
-
-  } // end nextSlide
-
-  function prevSlide(e, slides, winHeight) {
-
-      var currentSlide = slides.filter(function(obj) {
-                          return obj.current;
-                        })[0],
-          animtedSlide = slides.filter(function(obj) {
-                          return obj.target.is(':animated');
-                        })[0],
-          currentSlideIndex = slides.indexOf(currentSlide),
-          prevSlide = slides[currentSlideIndex - 1];
-
-      if (currentSlideIndex !== 0 && !animtedSlide) {
-
-        if (prevSlide.target.is(':hidden')) {
-
-          prev(prevSlide, currentSlide);
-
-        }
-
-      } // end-else
-
-  } // end prevSlide
-
-  function scrollTo(e, slides) {
-
-    var targetElementId = $(e.target).attr('data-title'),
-        targetElement = slides.filter(function(obj) {
-                          return obj.id === targetElementId;
-                        })[0];
-
-    $body.animate({
-      scrollTop: targetElement.target.offset().top
-    });
-
-    $body.promise().done(function() {
-      targetElement.menuItem.parent().siblings().removeClass('active');
-      targetElement.menuItem.parent().addClass('active');
-    });
-
-  }
-
-  // DOM
-  var $body = $('body');
-  var $navBar = $('#nav-bar');
-  var $navList = $navBar.find('.nav-list');
-  var $navToggle = $navBar.find('.toggle-nav').find('i');
-  var slides = [
-    {
-      id: 'home',
-      target: $('#home'),
-      menuItem: $navList.find('a[data-title=' + 'home' + ']'),
-      current: true
-    },
-    {
-      id: 'about',
-      target: $('#about'),
-      menuItem: $navList.find('a[data-title=' + 'about' + ']'),
-      current: false
-    },
-    {
-      id: 'portfolio',
-      target: $('#portfolio'),
-      menuItem: $navList.find('a[data-title=' + 'portfolio' + ']'),
-      current: false
-    },
-    {
-      id: 'contact',
-      target: $('#contact'),
-      menuItem: $navList.find('a[data-title=' + 'contact' + ']'),
-      current: false
-    }
-  ];
-  var $sections = $('.section');
-  var $skillBars = $('.skill-bar');
-
-  // Vars
-  var winHeight = $(window).height();
-
-  function portfolio() {
-
-    // Slides mode
-    if ($sections.css('position') === 'absolute') {
-
-      // Hide hidden slides
-      slides.forEach(function(slide) {
-        if (!slide.current) {
-          slide.target.css({
-            display: 'none'
-          });
-        }
-      });
-
-      // Next slide mousewheel
-      $body.on('mousewheel', function(e) {
-        if (e.deltaY < 1) {
-          nextSlide(e, slides, winHeight);
-        }
-      });
-
-      // Prev slide mousewheel
-      $body.on('mousewheel', function(e) {
-        if (e.deltaY === 1) {
-          prevSlide(e, slides, winHeight);
-        }
-      });
-
-    } else {
-
-      $sections.css({
-        display: 'block',
-        marginTop: 0
-      });
-
-    } // end-if-section
-
-    if ($navToggle.is(':hidden')) {
-
-      $navList.css({
-        display: 'block'
-      });
-
-    } else {
-
-      $navList.css({
-        display: 'none'
-      });
-
-    } // end-if-nav-toggle
-
-    $skillBars.each(function() {
-      $(this).css({
-        width: $(this).html()
-      });
-    });
-
-  } // end-portfolio
-
-  $(document).ready(function() {
-    // Run my function
-    portfolio();
-
-    // Update winHeight when resizing the window
-    $(window).resize(function() {
-      winHeight = $(window).height();
-      portfolio();
-    });
-    
-    // Fixed Nav
-    $navList.on('click', function(e) {
-      scrollTo(e, slides);
-
-      if (!$navToggle.is(':hidden') && $navToggle.hasClass('fa-close')) {
-        $navList.hide();
-        $navToggle.addClass('fa-bars').removeClass('fa-close');
+var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}} // ——————————————————————————————————————————————————
+// TextScramble
+// ——————————————————————————————————————————————————
+var
+TextScramble = function () {
+  function TextScramble(el) {_classCallCheck(this, TextScramble);
+    this.el = el;
+    this.chars = '!<>-_\\/[]{}—=+*^?#________';
+    this.update = this.update.bind(this);
+  }_createClass(TextScramble, [{ key: 'setText', value: function setText(
+    newText) {var _this = this;
+      var oldText = this.el.innerText;
+      var length = Math.max(oldText.length, newText.length);
+      var promise = new Promise(function (resolve) {return _this.resolve = resolve;});
+      this.queue = [];
+      for (var i = 0; i < length; i++) {
+        var from = oldText[i] || '';
+        var to = newText[i] || '';
+        var start = Math.floor(Math.random() * 40);
+        var end = start + Math.floor(Math.random() * 40);
+        this.queue.push({ from: from, to: to, start: start, end: end });
       }
-    });
-
-    // Mobile Nav
-    $navToggle.on('click', function(e) {
-      var self = $(this);
-      if (self.hasClass('fa-bars')) {
-        self.addClass('fa-close').removeClass('fa-bars');
+      cancelAnimationFrame(this.frameRequest);
+      this.frame = 0;
+      this.update();
+      return promise;
+    } }, { key: 'update', value: function update()
+    {
+      var output = '';
+      var complete = 0;
+      for (var i = 0, n = this.queue.length; i < n; i++) {var _queue$i =
+        this.queue[i],from = _queue$i.from,to = _queue$i.to,start = _queue$i.start,end = _queue$i.end,char = _queue$i.char;
+        if (this.frame >= end) {
+          complete++;
+          output += to;
+        } else if (this.frame >= start) {
+          if (!char || Math.random() < 0.28) {
+            char = this.randomChar();
+            this.queue[i].char = char;
+          }
+          output += '<span class="dud">' + char + '</span>';
+        } else {
+          output += from;
+        }
+      }
+      this.el.innerHTML = output;
+      if (complete === this.queue.length) {
+        this.resolve();
       } else {
-        self.addClass('fa-bars').removeClass('fa-close');
+        this.frameRequest = requestAnimationFrame(this.update);
+        this.frame++;
       }
-      $navList.toggle();
-    });
+    } }, { key: 'randomChar', value: function randomChar()
+    {
+      return this.chars[Math.floor(Math.random() * this.chars.length)];
+    } }]);return TextScramble;}();
 
+
+// ——————————————————————————————————————————————————
+// Example
+// ——————————————————————————————————————————————————
+
+var phrases = [
+'Ha,',
+'sooner or later',
+'you\'re going to realize',
+'just as I did',
+'that there\'s a difference',
+'between knowing the path',
+'and walking the path'];
+
+
+var el = document.querySelector('.text');
+var fx = new TextScramble(el);
+
+var counter = 0;
+var next = function next() {
+  fx.setText(phrases[counter]).then(function () {
+    setTimeout(next, 800);
   });
+  counter = (counter + 1) % phrases.length;
+};
 
-});
-
+next();
