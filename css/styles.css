@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald:300|Open+Sans:700,400);
 
 #main {
-  background-image: url('../img/journal.jpg');
+  /* background-image: url('../img/journal.jpg'); */
   background-size: cover;
   background-position: center center;
   position: relative;
@@ -226,27 +226,42 @@ background
 }
 
 
-@import 'https://fonts.googleapis.com/css?family=Roboto+Mono:100';
-html,
+@import url(https://fonts.googleapis.com/css?family=Khula:700);
 body {
-  font-family: 'Roboto Mono', monospace;
-  height: 100%;
+  background: #111;
 }
-.container {
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
+.hidden {
+  opacity: 0;
 }
-.text {
-  font-weight: 100;
-  font-size: 28px;
-  color: #fafafa;
+.console-container {
+  font-family: Khula;
+  font-size: 4em;
+  text-align: center;
+  height: 200px;
+  width: 600px;
+  display: block;
+  position: absolute;
+  color: white;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
-.dud {
-  color: #757575;
+.console-underscore {
+  display: inline-block;
+  position: relative;
+  top: -0.14em;
+  left: 10px;
 }
 
 
 
+.text{
+ 
+}
+
+.parallax-container{
+
+  background-image: url(img/journal.jpg)
+}
