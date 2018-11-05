@@ -119,33 +119,27 @@
   </div>
 </div>
 <div id="skills">
-
-  <h1 style="font-family:Tangerine;text-align: center; color: orange; font-size: 30px;">TECHNICAL SKILLS</h1>
-
-  <div class="container">
-    <section id="skills">
-      <progress value="80" max="100"></progress><span>JavaScript/jQuery</span>
-      <progress value="70" max="100"></progress><span>HTML5/CSS3</span>
-      <progress value="60" max="100"></progress><span>NodeJS</span>
-      <progress value="70" max="100"></progress><span>Java/PHP</span>
-      <progress value="60" max="100"></progress><span>MySQL</span>
-      <progress value="80" max="100"></progress><span>Photoshop</span>
-    </section>
+    <h1 style="font-family:Tangerine;text-align: center;color:orange;">Technical Skills</h1>
+    <hr>
+    <div class='row'>
+      <div class="col-md-3">
+        <img src="img/python.png" alt="" height="100px">
+      </div>
+      <div class="col-md-3">
+        <img src="img/angular.png" alt="" height="100px">
+      </div>
+      <div class="col-md-3">
+        <img src="img/flask.png" alt="" height="100px">
+      </div>
+      <div class="col-md-3">
+        <img src="img/postgres.png" alt="" height="100px">
+      </div>
+    </div>
   </div>
-
-  <script>
-    $(function () {
-      $('progress').each(function () {
-        var max = $(this).val();
-        $(this).val(0).animate({ value: max }, { duration: 2000, easing: 'easeOutCirc' });
-      });
-    });
-  </script>
-
-
 </div>
+<div id="contact">
 <footer class="footer text-center" style="background: rgba(104, 102, 102, 0.589)">
-  <h1 style="text-align:center;">CONTACT</h1>
+  <h1 style="text-align:center;color:orange;">CONTACT</h1>
   <h4 class="text-uppercase mb-4" style="text-align:center;">Location</h4><br>
   <p class="lead mb-0" style="text-align:center;">Nairobi, Kenya </p>
   <address style="text-align:center;">
@@ -154,9 +148,7 @@
     <br> Phone: +254711139310
     <br> Email: chegehannah45@gmail.com
   </address>
-
-
-
+</div>
   </div>
 
 </footer>
