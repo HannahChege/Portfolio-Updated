@@ -301,9 +301,11 @@ body {
 }
 .footer {
   padding-top: 5rem;
+  height:350px;
+  width: 1400px;
   padding-bottom: 5rem;
-  background-color: #2C3E50;
-  color: #fff;
+  background-color: white;
+  color: black;
 }
 
 .copyright {
