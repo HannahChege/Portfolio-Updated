@@ -1,8 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald:300|Open+Sans:700,400);
 
 body {
+  background-image: url("../img/image1.png.jpg");
+  /* opacity: 1 !important; */
+
+  background-size: cover;
+  background-attachment: fixed;
+}
+body {
   font-family: 'Lato';
-  background-color: black;
+  /* background-color: black; */
 }
 
 h1,
@@ -263,8 +270,19 @@ background
 
 @import url(https://fonts.googleapis.com/css?family=Khula:700);
 body {
-  background: black;
+  background:;
+  background-image: url("../img/4-unsplash.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 }
+/* .footer {
+  padding-top: 5rem;
+  height:550px;
+  width: 1400px;
+  padding-bottom: 5rem;
+  /* background-color: white;
+  color: black; */
+} */
 .hidden {
   opacity: 0;
 }
@@ -298,16 +316,16 @@ body {
 
 .parallax-container{
 
-  background-image: url(img/journal.jpg)
+  /* background-image: url(img/journal.jpg) */
 }
-.footer {
+/* .footer {
   padding-top: 5rem;
   height:350px;
   width: 1400px;
   padding-bottom: 5rem;
   background-color: white;
   color: black;
-}
+} */
 
 .copyright {
   background-color: #1a252f;
